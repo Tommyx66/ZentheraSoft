@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Blanco */
+    --foreground: 222.2 84% 4.9%; /* Casi negro */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    /* Custom ZentheraSoft colors as HSL variables */
+    --zenthera-primary-h: 245;
+    --zenthera-primary-s: 40%;
+    --zenthera-primary-l: 53.9%; /* #6761af */
+
+    --zenthera-secondary-h: 245;
+    --zenthera-secondary-s: 35.7%;
+    --zenthera-secondary-l: 32.2%; /* #37356e */
+
+    --zenthera-dark-h: 240;
+    --zenthera-dark-s: 40%;
+    --zenthera-dark-l: 7.6%; /* #0c0c1d */
+
+    --zenthera-light-h: 240;
+    --zenthera-light-s: 4.8%;
+    --zenthera-light-l: 85.7%; /* #dcdbdf */
+
+    --zenthera-muted-h: 245;
+    --zenthera-muted-s: 12.9%;
+    --zenthera-muted-l: 40.8%; /* #5d5771 */
+
+    --zenthera-accent-h: 245;
+    --zenthera-accent-s: 10.7%;
+    --zenthera-accent-l: 55.7%; /* #8c8493 */
+  }
+
+  .dark {
+    --background: 240 40% 7.6%; /* #0c0c1d */
+    --foreground: 240 4.8% 85.7%; /* #dcdbdf */
+
+    --card: 245 35.7% 32.2%; /* #37356e */
+    --card-foreground: 240 4.8% 85.7%;
+
+    --popover: 245 35.7% 32.2%;
+    --popover-foreground: 240 4.8% 85.7%;
+
+    --primary: 245 40% 53.9%; /* #6761af */
+    --primary-foreground: 240 4.8% 85.7%;
+
+    --secondary: 245 35.7% 32.2%; /* #37356e */
+    --secondary-foreground: 240 4.8% 85.7%;
+
+    --muted: 245 12.9% 40.8%; /* #5d5771 */
+    --muted-foreground: 245 10.7% 55.7%; /* #8c8493 */
+
+    --accent: 245 12.9% 40.8%;
+    --accent-foreground: 240 4.8% 85.7%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 245 35.7% 32.2%;
+    --input: 245 35.7% 32.2%;
+    --ring: 245 40% 53.9%;
+
+    /* Custom ZentheraSoft colors as HSL variables for dark mode */
+    --zenthera-primary-h: 245;
+    --zenthera-primary-s: 40%;
+    --zenthera-primary-l: 53.9%;
+
+    --zenthera-secondary-h: 245;
+    --zenthera-secondary-s: 35.7%;
+    --zenthera-secondary-l: 32.2%;
+
+    --zenthera-dark-h: 240;
+    --zenthera-dark-s: 40%;
+    --zenthera-dark-l: 7.6%;
+
+    --zenthera-light-h: 240;
+    --zenthera-light-s: 4.8%;
+    --zenthera-light-l: 85.7%;
+
+    --zenthera-muted-h: 245;
+    --zenthera-muted-s: 12.9%;
+    --zenthera-muted-l: 40.8%;
+
+    --zenthera-accent-h: 245;
+    --zenthera-accent-s: 10.7%;
+    --zenthera-accent-l: 55.7%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--zenthera-dark-h) var(--zenthera-dark-s) var(--zenthera-dark-l));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--zenthera-primary-h) var(--zenthera-primary-s) var(--zenthera-primary-l));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--zenthera-secondary-h) var(--zenthera-secondary-s) var(--zenthera-secondary-l));
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
