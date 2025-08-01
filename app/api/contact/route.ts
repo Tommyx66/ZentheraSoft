@@ -2,9 +2,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import * as z from "zod";
 
-// Inicializa Resend con la API Key
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Validación de los datos del formulario
 const contactSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -26,6 +23,18 @@ function escapeHtml(text: string) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificá que esté la API key
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY no está definida");
+      return NextResponse.json(
+        { error: "Configuración del servidor incompleta" },
+        { status: 500 }
+      );
+    }
+
+    // Inicializá Resend aquí, en tiempo de request (evita romper el build)
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     const body = await request.json();
     const { name, email, phone, subject, message } = contactSchema.parse(body);
 

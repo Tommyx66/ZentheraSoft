@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,6 +30,6 @@ const nextConfig = {
     ],
     unoptimized: true, // Esto puede ayudar a evitar problemas de optimización si la red es lenta
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
