@@ -61,7 +61,12 @@ const config: Config = {
           light: "#dcdbdf",
           muted: "#5d5771",
           accent: "#8c8493",
+          orange: "#f8973d", // Nuevo color naranja del branding
         },
+      },
+      fontFamily: {
+        brand: ["var(--font-brand)", "system-ui", "sans-serif"],
+        "body-alt": ["var(--font-body-alt)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -84,7 +89,7 @@ const config: Config = {
       },
     },
   },
-
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config
 
 export default config

@@ -58,6 +58,10 @@
     --zenthera-accent-h: 245;
     --zenthera-accent-s: 10.7%;
     --zenthera-accent-l: 55.7%; /* #8c8493 */
+
+    --zenthera-orange-h: 28;
+    --zenthera-orange-s: 94%;
+    --zenthera-orange-l: 59%; /* #f8973d */
   }
 
   .dark {
@@ -88,31 +92,6 @@
     --border: 245 35.7% 32.2%;
     --input: 245 35.7% 32.2%;
     --ring: 245 40% 53.9%;
-
-    /* Custom ZentheraSoft colors as HSL variables for dark mode */
-    --zenthera-primary-h: 245;
-    --zenthera-primary-s: 40%;
-    --zenthera-primary-l: 53.9%;
-
-    --zenthera-secondary-h: 245;
-    --zenthera-secondary-s: 35.7%;
-    --zenthera-secondary-l: 32.2%;
-
-    --zenthera-dark-h: 240;
-    --zenthera-dark-s: 40%;
-    --zenthera-dark-l: 7.6%;
-
-    --zenthera-light-h: 240;
-    --zenthera-light-s: 4.8%;
-    --zenthera-light-l: 85.7%;
-
-    --zenthera-muted-h: 245;
-    --zenthera-muted-s: 12.9%;
-    --zenthera-muted-l: 40.8%;
-
-    --zenthera-accent-h: 245;
-    --zenthera-accent-s: 10.7%;
-    --zenthera-accent-l: 55.7%;
   }
 }
 
@@ -122,6 +101,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 }
 
@@ -135,12 +115,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--zenthera-primary-h) var(--zenthera-primary-s) var(--zenthera-primary-l));
+  background: linear-gradient(to bottom, #6761af, #f8973d);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--zenthera-secondary-h) var(--zenthera-secondary-s) var(--zenthera-secondary-l));
+  background: linear-gradient(to bottom, #f8973d, #6761af);
 }
 
 /* Smooth scrolling */
@@ -148,18 +128,101 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* Cosmic animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    transform: translateY(-20px) rotate(5deg);
   }
 }
 
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out;
+@keyframes pulse-cosmic {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-cosmic {
+  animation: pulse-cosmic 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 20px rgba(103, 97, 175, 0.3), 0 0 40px rgba(103, 97, 175, 0.1);
+}
+
+.glow-orange {
+  box-shadow: 0 0 20px rgba(248, 151, 61, 0.3), 0 0 40px rgba(248, 151, 61, 0.1);
+}
+
+/* Text glow */
+.text-glow-purple {
+  text-shadow: 0 0 10px rgba(103, 97, 175, 0.5), 0 0 20px rgba(103, 97, 175, 0.3);
+}
+
+.text-glow-orange {
+  text-shadow: 0 0 10px rgba(248, 151, 61, 0.5), 0 0 20px rgba(248, 151, 61, 0.3);
+}
+
+/* Backdrop blur enhancement */
+.backdrop-blur-cosmic {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Cosmic gradient backgrounds */
+.bg-cosmic-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(12, 12, 29, 0.9) 0%,
+    rgba(26, 11, 46, 0.8) 25%,
+    rgba(22, 33, 62, 0.8) 50%,
+    rgba(15, 52, 96, 0.9) 100%
+  );
+}
+
+.bg-cosmic-card {
+  background: linear-gradient(135deg, rgba(55, 53, 110, 0.3) 0%, rgba(26, 11, 46, 0.5) 100%);
+  border: 1px solid rgba(103, 97, 175, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Enhanced button styles */
+.btn-cosmic {
+  background: linear-gradient(135deg, #6761af 0%, #f8973d 100%);
+  box-shadow: 0 4px 15px rgba(103, 97, 175, 0.3), 0 0 20px rgba(248, 151, 61, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-cosmic:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(103, 97, 175, 0.4), 0 0 30px rgba(248, 151, 61, 0.3);
 }
