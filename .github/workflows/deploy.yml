@@ -1,4 +1,4 @@
-name: Deploy to DonWeb FTP
+name: Deploy to DonWeb FTP using lftp
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -26,11 +26,15 @@ jobs:
           npm run build
           npm run export
 
-      - name: Deploy via FTP
-        uses: lukka/ftp-deploy@v1
-        with:
-          server: ftp.tudominio.com    # Cambia por tu servidor FTP
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out
-          server-dir: /public_html      # Cambia según tu carpeta pública
+      - name: Deploy via FTP with lftp
+        env:
+          FTP_HOST: c2831423.ferozo.com       # Cambiá por tu FTP DonWeb
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: /public_html        # Carpeta destino en DonWeb
+        run: |
+          lftp -c "
+            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
+            mirror -R --delete --verbose ./out $FTP_REMOTE_DIR
+            bye
+          "
