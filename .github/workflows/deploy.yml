@@ -27,7 +27,7 @@ jobs:
         npm run export
 
     - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+      uses: SamKirkland/FTP-Deploy-Action@v3
       with:
         server: c2831423.ferozo.com
         username: ${{ secrets.FTP_USERNAME }}
