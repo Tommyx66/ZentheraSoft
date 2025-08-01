@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -26,12 +28,15 @@ jobs:
           npm run build
           npm run export
 
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
       - name: Deploy via FTP with lftp
         env:
-          FTP_HOST: c2831423.ferozo.com       # Cambiá por tu FTP DonWeb
+          FTP_HOST: c2831423.ferozo.com
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_REMOTE_DIR: /public_html        # Carpeta destino en DonWeb
+          FTP_REMOTE_DIR: /public_html
         run: |
           lftp -c "
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
