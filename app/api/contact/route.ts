@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // Enviar email interno a ZentheraSoft
     await resend.emails.send({
-      from: "ZentheraSoft <onboarding@resend.dev>",
+      from: "ZentheraSoft <contacto@zentherasoft.com>",
       to: ["contacto@zentherasoft.com"],
       subject: `Nuevo contacto: ${safeSubject}`,
       html: emailContent,

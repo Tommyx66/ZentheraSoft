@@ -32,13 +32,13 @@ jobs:
 
       - name: Deploy via FTP with lftp
         env:
-          FTP_HOST: c2831423.ferozo.com
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_REMOTE_DIR: /public_html
+           FTP_HOST: c2831423.ferozo.com
+           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+           FTP_REMOTE_DIR: /public_html
         run: |
+          sudo apt-get install -y lftp
           lftp -c "
-            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
-            mirror -R --delete --verbose ./out $FTP_REMOTE_DIR
-            bye
+          open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
+          mirror -R --delete --verbose ./out $FTP_REMOTE_DIR
           "
