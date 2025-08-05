@@ -20,7 +20,9 @@ function escapeHtml(text: string) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-
+export async function GET() {
+  return NextResponse.json({ status: "OK - api/contact reachable" });
+}
 export async function POST(request: NextRequest) {
   try {
     // Verificá que esté la API key
