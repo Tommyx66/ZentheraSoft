@@ -133,7 +133,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
           {/* Contact */}
           <div>
             <h3 className="text-[#dcdbdf] font-semibold text-lg mb-4 font-brand">
@@ -152,27 +151,25 @@ export default function Footer() {
               <li className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-[#f8973d]" />
                 <div>
-<Link
-                  href="tel:+54 (223) 96690935"
-                  className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
-                >
-                  +54 (223) 96690935{" "} <br></br>
-                </Link>
-                <Link
-                  href="tel:+54 9 2266 63-2085"
-                  className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
-                >
-                  +54 9 2266 63-2085{" "}
-                </Link>
+                  <Link
+                    href="tel:+54 (223) 96690935"
+                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
+                  >
+                    +54 (223) 96690935 <br></br>
+                  </Link>
+                  <Link
+                    href="tel:+54 9 2266 63-2085"
+                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
+                  >
+                    +54 9 2266 63-2085{" "}
+                  </Link>
                 </div>
-                
               </li>
               <li className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-[#f8973d]" />
                 <span className="text-[#8c8493]">Remoto - Worldwide</span>
               </li>
             </ul>
-
             <div className="mt-6">
               <h4 className="text-[#dcdbdf] font-medium mb-3 font-brand">
                 Horarios de Atención
@@ -185,7 +182,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
         {/* Bottom Bar */}
         <div className="border-t border-[#37356e] border-opacity-50 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">

@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -17,18 +16,18 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "blob.v0.dev", // Para las imágenes de placeholder de v0
+        hostname: "blob.v0.dev",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "via.placeholder.com", // Para las imágenes de placeholder genéricas
+        hostname: "via.placeholder.com",
         port: "",
         pathname: "/**",
       },
     ],
-    unoptimized: true, // Esto puede ayudar a evitar problemas de optimización si la red es lenta
+    unoptimized: true,
   },
 };
 
