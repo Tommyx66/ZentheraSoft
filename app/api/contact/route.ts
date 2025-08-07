@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { Resend } from "resend"
-import * as z from "zod"
+import { type NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+import * as z from "zod";
 
 // Validación de los datos del formulario
 const contactSchema = z.object({
@@ -10,33 +10,36 @@ const contactSchema = z.object({
   subject: z.string().min(5, "El asunto debe tener al menos 5 caracteres"),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
   recaptchaToken: z.string().optional(),
-})
+});
 
 // Verificar reCAPTCHA
 async function verifyRecaptcha(token: string): Promise<boolean> {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY
-  
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
   if (!secretKey) {
-    console.error("RECAPTCHA_SECRET_KEY no está definida")
-    return false
+    console.error("RECAPTCHA_SECRET_KEY no está definida");
+    return false;
   }
 
   try {
-    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `secret=${secretKey}&response=${token}`,
-    })
+    const response = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${secretKey}&response=${token}`,
+      }
+    );
 
-    const data = await response.json()
-    console.log("✅ Respuesta reCAPTCHA:", data)
-    
-    return data.success === true
+    const data = await response.json();
+    console.log("✅ Respuesta reCAPTCHA:", data);
+
+    return data.success === true;
   } catch (error) {
-    console.error("❌ Error verificando reCAPTCHA:", error)
-    return false
+    console.error("❌ Error verificando reCAPTCHA:", error);
+    return false;
   }
 }
 
@@ -47,68 +50,72 @@ function escapeHtml(text: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;")
+    .replace(/'/g, "&#039;");
 }
 
 export async function GET() {
-  return NextResponse.json({ status: "OK - api/contact reachable" })
+  return NextResponse.json({ status: "OK - api/contact reachable" });
 }
 
 export async function POST(request: NextRequest) {
-  console.log("🚀 Iniciando procesamiento de formulario de contacto...")
-  
+  console.log("🚀 Iniciando procesamiento de formulario de contacto...");
+
   try {
     // Verificar que estén las API keys
     if (!process.env.RESEND_API_KEY) {
-      console.error("❌ RESEND_API_KEY no está definida")
+      console.error("❌ RESEND_API_KEY no está definida");
       return NextResponse.json(
         { error: "Configuración del servidor incompleta" },
         { status: 500 }
-      )
+      );
     }
 
-    console.log("✅ RESEND_API_KEY encontrada")
+    console.log("✅ RESEND_API_KEY encontrada");
 
-    const body = await request.json()
-    console.log("📝 Datos recibidos:", { 
-      name: body.name, 
-      email: body.email, 
+    const body = await request.json();
+    console.log("📝 Datos recibidos:", {
+      name: body.name,
+      email: body.email,
       subject: body.subject,
-      hasRecaptcha: !!body.recaptchaToken 
-    })
+      hasRecaptcha: !!body.recaptchaToken,
+    });
 
-    const { name, email, phone, subject, message, recaptchaToken } = contactSchema.parse(body)
+    const { name, email, phone, subject, message, recaptchaToken } =
+      contactSchema.parse(body);
 
     // Verificar reCAPTCHA solo si está configurado y hay token
     if (process.env.RECAPTCHA_SECRET_KEY && recaptchaToken) {
-      console.log("🔐 Verificando reCAPTCHA...")
-      const isRecaptchaValid = await verifyRecaptcha(recaptchaToken)
+      console.log("🔐 Verificando reCAPTCHA...");
+      const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
       if (!isRecaptchaValid) {
-        console.log("❌ reCAPTCHA inválido")
+        console.log("❌ reCAPTCHA inválido");
         return NextResponse.json(
-          { error: "Verificación reCAPTCHA fallida. Por favor intenta de nuevo." },
+          {
+            error:
+              "Verificación reCAPTCHA fallida. Por favor intenta de nuevo.",
+          },
           { status: 400 }
-        )
+        );
       }
-      console.log("✅ reCAPTCHA válido")
+      console.log("✅ reCAPTCHA válido");
     } else if (process.env.RECAPTCHA_SECRET_KEY && !recaptchaToken) {
-      console.log("❌ Token reCAPTCHA faltante")
+      console.log("❌ Token reCAPTCHA faltante");
       return NextResponse.json(
         { error: "Token reCAPTCHA requerido" },
         { status: 400 }
-      )
+      );
     }
 
     // Inicializar Resend
-    console.log("📧 Inicializando Resend...")
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    console.log("📧 Inicializando Resend...");
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Sanitizar datos para prevenir XSS
-    const safeName = escapeHtml(name)
-    const safeEmail = escapeHtml(email)
-    const safePhone = phone ? escapeHtml(phone) : null
-    const safeSubject = escapeHtml(subject)
-    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>")
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = phone ? escapeHtml(phone) : null;
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
 
     const emailContent = `
       <div style="font-family: Arial, sans-serif; padding: 16px; color: #333; max-width: 600px;">
@@ -135,34 +142,31 @@ export async function POST(request: NextRequest) {
           </p>
         </div>
       </div>
-    `
+    `;
 
     // ENVIAR AL EMAIL CORPORATIVO (cuando funcione)
-    console.log("📤 Enviando email interno...")
+    console.log("📤 Enviando email interno...");
     try {
       const internalEmailResult = await resend.emails.send({
-        from: "ZentheraSoft Contacto <contacto@zentherasoft.com>",
-       
-        to: ["contacto@zentherasoft.com"], 
-     
+        from: "ZentheraSoft Contacto <onboarding@resend.dev>",
+        to: ["contacto@zentherasoft.com"],
         subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
         html: emailContent,
-        replyTo: safeEmail,
-      })
-      
-      console.log("✅ Email interno enviado exitosamente!")
-      console.log("📧 Resultado interno:", internalEmailResult)
-      
+        reply_to: safeEmail,
+      });
+
+      console.log("✅ Email interno enviado exitosamente!");
+      console.log("📧 Resultado interno:", internalEmailResult);
     } catch (internalError: any) {
-      console.error("❌ Error enviando email interno:")
-      console.error("Error completo:", internalError)
+      console.error("❌ Error enviando email interno:");
+      console.error("Error completo:", internalError);
     }
 
     // Email de confirmación al usuario
-    console.log("📤 Enviando email de confirmación...")
+    console.log("📤 Enviando email de confirmación...");
     try {
       const confirmationResult = await resend.emails.send({
-        from: "ZentheraSoft <contacto@zentherasoft.com>",
+        from: "ZentheraSoft <onboarding@resend.dev>",
         to: [safeEmail],
         subject: "✅ Gracias por contactarnos - ZentheraSoft",
         html: `
@@ -185,27 +189,27 @@ export async function POST(request: NextRequest) {
             </div>
           </div>
         `,
-      })
-      
-      console.log("✅ Email de confirmación enviado exitosamente!")
-      console.log("📧 Resultado confirmación:", confirmationResult)
-      
+      });
+
+      console.log("✅ Email de confirmación enviado exitosamente!");
+      console.log("📧 Resultado confirmación:", confirmationResult);
     } catch (confirmationError: any) {
-      console.error("❌ Error enviando email de confirmación:")
-      console.error("Error completo:", confirmationError)
+      console.error("❌ Error enviando email de confirmación:");
+      console.error("Error completo:", confirmationError);
     }
 
-    console.log("🎉 Procesamiento completado exitosamente")
-    return NextResponse.json({ success: true })
-    
+    console.log("🎉 Procesamiento completado exitosamente");
+    return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error("💥 Error general en el procesamiento:")
-    console.error("Error completo:", error)
-    
+    console.error("💥 Error general en el procesamiento:");
+    console.error("🧨 Tipo de error:", typeof error);
+    console.error("🧾 Stack:", error?.stack || "Sin stack trace");
+    console.error("🧾 Mensaje:", error?.message || "Sin mensaje");
+    console.error("🔍 Objeto completo:", JSON.stringify(error, null, 2));
     const message =
       error instanceof z.ZodError
         ? "Datos inválidos en el formulario"
-        : "Error al enviar el mensaje"
-    return NextResponse.json({ error: message }, { status: 500 })
+        : "Error al enviar el mensaje";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
