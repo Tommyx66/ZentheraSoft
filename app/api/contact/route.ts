@@ -137,12 +137,11 @@ export async function POST(request: NextRequest) {
       </div>
     `
 
-    // USAR ONBOARDING@RESEND.DEV TEMPORALMENTE HASTA QUE SE PROPAGUE LA VERIFICACIÓN
     console.log("📤 Enviando email interno con dominio de Resend (temporal)...")
     try {
       const internalEmailResult = await resend.emails.send({
-        from: "ZentheraSoft Contacto <onboarding@resend.dev>",
-        to: ["tommzx66@gmail.com"], // Tu Gmail personal
+        from: "ZentheraSoft Contacto <contacto@zentherasoft.com>",
+        to: ["contacto@zentherasoft.com"], 
         subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
         html: emailContent,
         replyTo: safeEmail,
@@ -156,11 +155,10 @@ export async function POST(request: NextRequest) {
       console.error("Error completo:", internalError)
     }
 
-    // Email de confirmación al usuario - TAMBIÉN CON ONBOARDING
     console.log("📤 Enviando email de confirmación...")
     try {
       const confirmationResult = await resend.emails.send({
-        from: "ZentheraSoft <onboarding@resend.dev>",
+        from: "ZentheraSoft <contacto@zentherasoft.com>",
         to: [safeEmail],
         subject: "✅ Gracias por contactarnos - ZentheraSoft",
         html: `
