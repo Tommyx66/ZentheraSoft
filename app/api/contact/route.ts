@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (!process.env.RESEND_API_KEY) {
       console.error("❌ RESEND_API_KEY no está definida")
       return NextResponse.json(
-        { error: "Configuración del servidor incompleta" },
+        { error: "Configuraci��n del servidor incompleta" },
         { status: 500 }
       )
     }
@@ -130,17 +130,20 @@ export async function POST(request: NextRequest) {
           <p style="margin: 0; color: #666; font-size: 14px;">
             Este mensaje fue enviado desde el formulario de contacto de ZentheraSoft.com
           </p>
+          <p style="margin: 10px 0 0 0; color: #666; font-size: 14px;">
+            <strong>Responder directamente a:</strong> ${safeEmail}
+          </p>
         </div>
       </div>
     `
 
-    // Intentar enviar email interno
-    console.log("📤 Intentando enviar email interno...")
+    // Enviar email interno usando dominio verificado
+    console.log("📤 Enviando email interno con dominio verificado...")
     try {
       const internalEmailResult = await resend.emails.send({
-        from: "Contacto ZentheraSoft <noreply@zentherasoft.com>",
-        to: ["contacto@zentherasoft.com"],
-        subject: `🚀 Nuevo contacto: ${safeSubject}`,
+        from: "ZentheraSoft Contacto <send@zentherasoft.com>",
+        to: ["contacto@zentherasoft.com"], // Cambia por tu email si no tienes este buzón
+        subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
         html: emailContent,
         replyTo: safeEmail,
       })
@@ -151,33 +154,30 @@ export async function POST(request: NextRequest) {
     } catch (internalError: any) {
       console.error("❌ Error enviando email interno:")
       console.error("Error completo:", internalError)
-      console.error("Mensaje:", internalError.message)
-      console.error("Status:", internalError.status)
-      console.error("Response:", internalError.response)
       
-      // Intentar con dirección alternativa
-      console.log("🔄 Intentando con dirección alternativa...")
+      // Fallback a tu Gmail personal si falla
+      console.log("🔄 Intentando fallback a Gmail personal...")
       try {
         const fallbackResult = await resend.emails.send({
-          from: "ZentheraSoft <contacto@zentherasoft.com>",
-          to: ["contacto@zentherasoft.com"],
-          subject: `🚀 Nuevo contacto: ${safeSubject}`,
+          from: "ZentheraSoft <send@zentherasoft.com>",
+          to: ["tommzx66@gmail.com"], // Tu Gmail como fallback
+          subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
           html: emailContent,
           replyTo: safeEmail,
         })
-        console.log("✅ Email interno enviado con dirección alternativa!")
-        console.log("📧 Resultado alternativo:", fallbackResult)
+        console.log("✅ Email interno enviado a Gmail fallback!")
+        console.log("📧 Resultado fallback:", fallbackResult)
       } catch (fallbackError: any) {
-        console.error("❌ Error con dirección alternativa:")
+        console.error("❌ Error con Gmail fallback:")
         console.error("Error completo:", fallbackError)
       }
     }
 
-    // Intentar enviar email de confirmación
-    console.log("📤 Intentando enviar email de confirmación...")
+    // Email de confirmación al usuario
+    console.log("📤 Enviando email de confirmación...")
     try {
       const confirmationResult = await resend.emails.send({
-        from: "ZentheraSoft <noreply@zentherasoft.com>",
+        from: "ZentheraSoft <send@zentherasoft.com>",
         to: [safeEmail],
         subject: "✅ Gracias por contactarnos - ZentheraSoft",
         html: `
@@ -193,7 +193,14 @@ export async function POST(request: NextRequest) {
               </div>
               <p>Nuestro equipo revisará tu consulta y te contactaremos dentro de las próximas 24 horas.</p>
             </div>
-            
+            <div style="margin-top: 20px; text-align: center;">
+              <p style="margin-bottom: 10px;">Mientras tanto, puedes seguirnos en nuestras redes:</p>
+              <div style="margin: 15px 0;">
+                <a href="https://github.com/zentherasoft" style="margin: 0 10px; text-decoration: none; color: #6761af;">GitHub</a>
+                <a href="https://linkedin.com/company/zentherasoft" style="margin: 0 10px; text-decoration: none; color: #6761af;">LinkedIn</a>
+                <a href="https://twitter.com/zentherasoft" style="margin: 0 10px; text-decoration: none; color: #6761af;">Twitter</a>
+              </div>
+            </div>
             <div style="margin-top: 30px; padding: 15px; background: #e8f4fd; border-radius: 8px; text-align: center;">
               <p style="margin: 0; font-weight: bold; color: #6761af;">Saludos,</p>
               <p style="margin: 5px 0 0 0; color: #666;">Equipo ZentheraSoft 🚀</p>
@@ -208,7 +215,6 @@ export async function POST(request: NextRequest) {
     } catch (confirmationError: any) {
       console.error("❌ Error enviando email de confirmación:")
       console.error("Error completo:", confirmationError)
-      console.error("Mensaje:", confirmationError.message)
     }
 
     console.log("🎉 Procesamiento completado exitosamente")
