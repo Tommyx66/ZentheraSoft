@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (!process.env.RESEND_API_KEY) {
       console.error("❌ RESEND_API_KEY no está definida")
       return NextResponse.json(
-        { error: "Configuraci��n del servidor incompleta" },
+        { error: "Configuración del servidor incompleta" },
         { status: 500 }
       )
     }
@@ -137,12 +137,12 @@ export async function POST(request: NextRequest) {
       </div>
     `
 
-    // Enviar email interno usando dominio verificado
-    console.log("📤 Enviando email interno con dominio verificado...")
+    // USAR ONBOARDING@RESEND.DEV TEMPORALMENTE HASTA QUE SE PROPAGUE LA VERIFICACIÓN
+    console.log("📤 Enviando email interno con dominio de Resend (temporal)...")
     try {
       const internalEmailResult = await resend.emails.send({
-        from: "ZentheraSoft Contacto <send@zentherasoft.com>",
-        to: ["contacto@zentherasoft.com"], // Cambia por tu email si no tienes este buzón
+        from: "ZentheraSoft Contacto <onboarding@resend.dev>",
+        to: ["tommzx66@gmail.com"], // Tu Gmail personal
         subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
         html: emailContent,
         replyTo: safeEmail,
@@ -154,30 +154,13 @@ export async function POST(request: NextRequest) {
     } catch (internalError: any) {
       console.error("❌ Error enviando email interno:")
       console.error("Error completo:", internalError)
-      
-      // Fallback a tu Gmail personal si falla
-      console.log("🔄 Intentando fallback a Gmail personal...")
-      try {
-        const fallbackResult = await resend.emails.send({
-          from: "ZentheraSoft <send@zentherasoft.com>",
-          to: ["tommzx66@gmail.com"], // Tu Gmail como fallback
-          subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
-          html: emailContent,
-          replyTo: safeEmail,
-        })
-        console.log("✅ Email interno enviado a Gmail fallback!")
-        console.log("📧 Resultado fallback:", fallbackResult)
-      } catch (fallbackError: any) {
-        console.error("❌ Error con Gmail fallback:")
-        console.error("Error completo:", fallbackError)
-      }
     }
 
-    // Email de confirmación al usuario
+    // Email de confirmación al usuario - TAMBIÉN CON ONBOARDING
     console.log("📤 Enviando email de confirmación...")
     try {
       const confirmationResult = await resend.emails.send({
-        from: "ZentheraSoft <send@zentherasoft.com>",
+        from: "ZentheraSoft <onboarding@resend.dev>",
         to: [safeEmail],
         subject: "✅ Gracias por contactarnos - ZentheraSoft",
         html: `
@@ -192,6 +175,7 @@ export async function POST(request: NextRequest) {
                 <p style="color: #666;">${safeMessage}</p>
               </div>
               <p>Nuestro equipo revisará tu consulta y te contactaremos dentro de las próximas 24 horas.</p>
+              <p><strong>📧 Responderemos desde:</strong> contacto@zentherasoft.com</p>
             </div>
             <div style="margin-top: 20px; text-align: center;">
               <p style="margin-bottom: 10px;">Mientras tanto, puedes seguirnos en nuestras redes:</p>
@@ -204,6 +188,7 @@ export async function POST(request: NextRequest) {
             <div style="margin-top: 30px; padding: 15px; background: #e8f4fd; border-radius: 8px; text-align: center;">
               <p style="margin: 0; font-weight: bold; color: #6761af;">Saludos,</p>
               <p style="margin: 5px 0 0 0; color: #666;">Equipo ZentheraSoft 🚀</p>
+              <p style="margin: 10px 0 0 0; color: #999; font-size: 12px;">contacto@zentherasoft.com</p>
             </div>
           </div>
         `,
