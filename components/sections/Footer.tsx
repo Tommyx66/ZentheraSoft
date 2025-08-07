@@ -1,17 +1,14 @@
-import { Button } from "@/components/ui/button";
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react'
+import Image from "next/image"
+import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 export default function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="bg-[#0c0c1d] border-t border-[#37356e] border-opacity-50 relative overflow-hidden">
       {/* Background Image */}
@@ -23,7 +20,7 @@ export default function Footer() {
           className="object-cover"
         />
       </div>
-
+      
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -38,8 +35,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-[#8c8493] mb-6 max-w-md">
-              Especialistas en desarrollo web y diseño digital. Creamos
-              soluciones que impulsan tu negocio hacia el éxito.
+              {t("footer.description")}
             </p>
             <div className="flex space-x-4">
               <Button
@@ -48,7 +44,7 @@ export default function Footer() {
                 className="border-[#6761af] text-[#6761af] hover:bg-[#6761af] hover:text-white p-2 bg-transparent"
                 asChild
               >
-                <Link href="https://github.com" target="_blank">
+                <Link href="https://github.com/zentherasoft" target="_blank">
                   <Github className="h-4 w-4" />
                 </Link>
               </Button>
@@ -58,7 +54,7 @@ export default function Footer() {
                 className="border-[#6761af] text-[#6761af] hover:bg-[#6761af] hover:text-white p-2 bg-transparent"
                 asChild
               >
-                <Link href="https://linkedin.com" target="_blank">
+                <Link href="https://linkedin.com/company/zentherasoft" target="_blank">
                   <Linkedin className="h-4 w-4" />
                 </Link>
               </Button>
@@ -68,7 +64,7 @@ export default function Footer() {
                 className="border-[#f8973d] text-[#f8973d] hover:bg-[#f8973d] hover:text-white p-2 bg-transparent"
                 asChild
               >
-                <Link href="https://twitter.com" target="_blank">
+                <Link href="https://twitter.com/zentherasoft" target="_blank">
                   <Twitter className="h-4 w-4" />
                 </Link>
               </Button>
@@ -78,7 +74,7 @@ export default function Footer() {
                 className="border-[#f8973d] text-[#f8973d] hover:bg-[#f8973d] hover:text-white p-2 bg-transparent"
                 asChild
               >
-                <Link href="https://instagram.com" target="_blank">
+                <Link href="https://instagram.com/zentherasoft" target="_blank">
                   <Instagram className="h-4 w-4" />
                 </Link>
               </Button>
@@ -88,7 +84,7 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h3 className="text-[#dcdbdf] font-semibold text-lg mb-4 font-brand">
-              Servicios
+              {t("footer.services")}
             </h3>
             <ul className="space-y-3">
               <li>
@@ -96,7 +92,7 @@ export default function Footer() {
                   href="#services"
                   className="text-[#8c8493] hover:text-[#6761af] transition-colors"
                 >
-                  Desarrollo React/Next.js
+                  {t("footerServices.reactNextjs")}
                 </Link>
               </li>
               <li>
@@ -104,7 +100,7 @@ export default function Footer() {
                   href="#services"
                   className="text-[#8c8493] hover:text-[#6761af] transition-colors"
                 >
-                  Desarrollo WordPress
+                  {t("footerServices.wordpress")}
                 </Link>
               </li>
               <li>
@@ -112,7 +108,7 @@ export default function Footer() {
                   href="#services"
                   className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
                 >
-                  Branding Visual
+                  {t("footerServices.branding")}
                 </Link>
               </li>
               <li>
@@ -120,7 +116,7 @@ export default function Footer() {
                   href="#services"
                   className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
                 >
-                  Diseño UX/UI
+                  {t("footerServices.uxui")}
                 </Link>
               </li>
               <li>
@@ -128,15 +124,16 @@ export default function Footer() {
                   href="#contact"
                   className="text-[#8c8493] hover:text-[#6761af] transition-colors"
                 >
-                  Consultoría Digital
+                  {t("footerServices.consulting")}
                 </Link>
               </li>
             </ul>
           </div>
+
           {/* Contact */}
           <div>
             <h3 className="text-[#dcdbdf] font-semibold text-lg mb-4 font-brand">
-              Contacto
+              {t("footer.contact")}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
@@ -152,16 +149,16 @@ export default function Footer() {
                 <Phone className="h-4 w-4 text-[#f8973d]" />
                 <div>
                   <Link
-                    href="tel:+54 (223) 96690935"
-                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
+                    href="tel:+542239669093"
+                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors block"
                   >
-                    +54 (223) 96690935 <br></br>
+                    +54 (223) 96690935
                   </Link>
                   <Link
-                    href="tel:+54 9 2266 63-2085"
-                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors"
+                    href="tel:+5492266632085"
+                    className="text-[#8c8493] hover:text-[#f8973d] transition-colors block"
                   >
-                    +54 9 2266 63-2085{" "}
+                    +54 9 2266 63-2085
                   </Link>
                 </div>
               </li>
@@ -172,46 +169,44 @@ export default function Footer() {
             </ul>
             <div className="mt-6">
               <h4 className="text-[#dcdbdf] font-medium mb-3 font-brand">
-                Horarios de Atención
+                {t("footer.hours")}
               </h4>
-              <p className="text-[#8c8493] text-sm">
-                Lunes a Viernes: 9:00 - 18:00
-                <br />
-                Sábados: 10:00 - 14:00
+              <p className="text-[#8c8493] text-sm whitespace-pre-line">
+                {t("footer.hoursDesc")}
               </p>
             </div>
           </div>
         </div>
+
         {/* Bottom Bar */}
         <div className="border-t border-[#37356e] border-opacity-50 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-[#8c8493] text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} ZentheraSoft. Todos los derechos
-              reservados.
+              © {new Date().getFullYear()} ZentheraSoft. {t("footer.rights")}
             </p>
             <div className="flex space-x-6">
               <Link
                 href="#"
                 className="text-[#8c8493] hover:text-[#6761af] text-sm transition-colors"
               >
-                Política de Privacidad
+                {t("footer.privacy")}
               </Link>
               <Link
                 href="#"
                 className="text-[#8c8493] hover:text-[#6761af] text-sm transition-colors"
               >
-                Términos de Servicio
+                {t("footer.terms")}
               </Link>
               <Link
                 href="#"
                 className="text-[#8c8493] hover:text-[#f8973d] text-sm transition-colors"
               >
-                Cookies
+                {t("footer.cookies")}
               </Link>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }

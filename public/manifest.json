@@ -1,21 +1,61 @@
 {
-  "name": "ZentheraSoft - Desarrollo Web Profesional",
+  "name": "ZentheraSoft - Innovación Digital Sin Límites",
   "short_name": "ZentheraSoft",
-  "description": "Especialistas en desarrollo web con WordPress, React/Next.js, branding visual y diseño UX/UI",
+  "description": "Especialistas en desarrollo web full-stack, diseño UX/UI, branding y marketing digital",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0c0c1d",
   "theme_color": "#6761af",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "technology"],
+  "lang": "es",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/images/zentherasoft-logo-square-dark.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/images/zentherasoft-logo-square-dark.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/zentherasoft-og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Contacto",
+      "short_name": "Contacto",
+      "description": "Contactar con ZentheraSoft",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/images/zentherasoft-logo-square-dark.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Servicios",
+      "short_name": "Servicios",
+      "description": "Ver nuestros servicios",
+      "url": "/#services",
+      "icons": [
+        {
+          "src": "/images/zentherasoft-logo-square-dark.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ]
 }
