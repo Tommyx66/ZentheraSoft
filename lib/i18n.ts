@@ -401,7 +401,7 @@ const resources = {
         wordpress: "WordPress Development",
         branding: "Visual Branding",
         uxui: "UX/UI Design",
-        consulting: "Digital Consulting"
+        consulting: "Digital Consulting "
       }
     }
   }
