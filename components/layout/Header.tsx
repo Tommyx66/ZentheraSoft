@@ -334,11 +334,11 @@ export default function Header() {
                       Contactar por WhatsApp
                     </span>
                     {animationsEnabled && (
-                      <motion.div className="absolute inset-0 bg-gradient-to-r from-[#6761af] to-[#f8973d] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <motion.div className="absolute inset-0 bg-gradient-to-r from-[#6962b2] to-[#f8973d] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     )}
                   </Button>
                 </MotionDiv>
-              </div>
+              </div> 
             </MotionDiv>
           )}
         </AnimatePresence>
