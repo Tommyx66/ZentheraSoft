@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
         to: ["contacto@zentherasoft.com"], 
         subject: `🚀 Nuevo contacto ZentheraSoft: ${safeSubject}`,
         html: emailContent,
-        replyTo: safeEmail,
+        reply_to: safeEmail,
       })
       
       console.log("✅ Email interno enviado exitosamente!")
