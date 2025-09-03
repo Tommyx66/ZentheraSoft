@@ -155,10 +155,10 @@ export default function Footer() {
                     +54 (223) 96690935
                   </Link>
                   <Link
-                    href="tel:+5492266632085"
+                    href="tel:+5491130894694"
                     className="text-[#8c8493] hover:text-[#f8973d] transition-colors block"
                   >
-                    +54 9 2266 63-2085
+                    +54 9 011 3089-4694
                   </Link>
                 </div>
               </li>

@@ -197,8 +197,8 @@ function ContactForm() {
                         <a href="tel:+542239669093" className="hover:text-[#6761af] transition-colors block">
                           +54 (223) 96690935
                         </a>
-                        <a href="tel:+5492266632085" className="hover:text-[#6761af] transition-colors block">
-                          +54 9 2266 63-2085
+                        <a href="tel:+5491130894694" className="hover:text-[#6761af] transition-colors block">
+                          +54 9 011 3089-4694 
                         </a>
                       </div>
                     </div>
@@ -224,8 +224,8 @@ function ContactForm() {
                   <Button
                     onClick={() =>
                       window.open(
-                        "https://wa.me/542239669093?text=Hola, me interesa agendar una consulta gratuita",
-                        "_blank"
+                        "https://wa.me/5491130894695?text=Hola, me gustaria obtener informacion sobre sus servicios, por favor",
+                        "_blank" // Actualizacion de numero empresarial, y texto.
                       )
                     }
                     className="w-full bg-[#f8973d] hover:bg-[#e8863d] text-white font-semibold"

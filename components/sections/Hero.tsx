@@ -13,7 +13,7 @@ export default function Hero() {
 
   const handleWhatsAppClick = () => {
     window.open(
-      "https://wa.me/542239669093?text=Hola, me interesa conocer más sobre sus servicios de desarrollo web",
+      "https://wa.me/5491130894695?text=Hola, me gustaria obtener informacion sobre sus servicios, por favor",
       "_blank",
     )
   }
